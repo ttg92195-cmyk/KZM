@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.kzm.app"
-    compileSdk = 34
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -20,8 +20,8 @@ android {
 
     defaultConfig {
         applicationId = "com.kzm.app"
-        minSdk = 21
-        targetSdk = 34
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -45,9 +45,6 @@ android {
 
     buildTypes {
         release {
-            // For CI builds without a keystore, fall back to debug signing
-            // so the APK can still be produced. Replace with signingConfigs.release
-            // once a keystore is provisioned.
             signingConfig = if (keystoreProperties["storeFile"] != null) {
                 signingConfigs.getByName("release")
             } else {
