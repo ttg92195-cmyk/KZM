@@ -11,6 +11,9 @@ jobs:
   build:
     name: Build Release APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed for softprops/action-gh-release to create a Release
+      actions: read
 
     steps:
       - name: Checkout code
