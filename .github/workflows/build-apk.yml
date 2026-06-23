@@ -68,7 +68,14 @@ jobs:
           cat pubspec.yaml
 
       - name: Build release APK (verbose)
-        run: flutter build apk --release --no-tree-shake-icons --verbose
+        env:
+          # API key is injected at build time via --dart-define.
+          # For better security, move this to a GitHub repo Secret named
+          # GEMINI_API_KEY and reference it via ${{ secrets.GEMINI_API_KEY }}.
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          flutter build apk --release --no-tree-shake-icons --verbose \
+            --dart-define=GEMINI_API_KEY="$GEMINI_API_KEY"
 
       - name: List build artifacts
         run: ls -la build/app/outputs/flutter-apk/

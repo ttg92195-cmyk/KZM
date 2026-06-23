@@ -6,12 +6,42 @@ import '../widgets/format_style_selector.dart';
 import '../widgets/output_panel.dart';
 import '../widgets/settings_dialog.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final input = ref.watch(inputTextProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late final TextEditingController _inputController;
+
+  @override
+  void initState() {
+    super.initState();
+    _inputController = TextEditingController(
+      text: ref.read(inputTextProvider),
+    );
+    _inputController.addListener(() {
+      ref.read(inputTextProvider.notifier).state = _inputController.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    _inputController.dispose();
+    super.dispose();
+  }
+
+  void _clearAll() {
+    _inputController.clear();
+    ref.read(inputTextProvider.notifier).state = '';
+    ref.read(outputTextProvider.notifier).state = '';
+    ref.read(errorMessageProvider.notifier).state = '';
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isProcessing = ref.watch(isProcessingProvider);
     final theme = Theme.of(context);
 
@@ -54,11 +84,7 @@ class HomeScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.delete_sweep_outlined),
             tooltip: 'Clear all',
-            onPressed: () {
-              ref.read(inputTextProvider.notifier).state = '';
-              ref.read(outputTextProvider.notifier).state = '';
-              ref.read(errorMessageProvider.notifier).state = '';
-            },
+            onPressed: _clearAll,
           ),
         ],
       ),
@@ -84,11 +110,9 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
+                    controller: _inputController,
                     minLines: 4,
                     maxLines: 8,
-                    value: input,
-                    onChanged: (v) =>
-                        ref.read(inputTextProvider.notifier).state = v,
                     style: theme.textTheme.bodyLarge,
                     decoration: const InputDecoration(
                       hintText: 'Type or paste the text you want to format...',

@@ -80,8 +80,8 @@ class GeminiService {
       return GeminiSuccess(out);
     } on GenerativeAIException catch (e) {
       return GeminiError('Gemini API error: ${e.message}');
-    } on ClientException catch (e) {
-      return GeminiError('Network error: ${e.message}');
+    } on FormatException catch (e) {
+      return GeminiError('Response format error: ${e.message}');
     } catch (e) {
       return GeminiError('Unexpected error: $e');
     }
