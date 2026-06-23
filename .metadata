@@ -1,12 +1,23 @@
-{
-    "flutter": {
-        "platforms": {
-            "android": "default",
-            "ios": "default",
-            "macos": "default",
-            "web": "default",
-            "linux": "default",
-            "windows": "default"
-        }
-    }
-}
+version:
+  revision: "stable"
+  channel: "stable"
+
+project_type: app
+
+migration:
+  platforms:
+    - platform: root
+    - platform: android
+    - platform: ios
+    - platform: web
+    - platform: linux
+    - platform: windows
+    - platform: macos
+
+  revisions:
+    android: "stable"
+    ios: "stable"
+    web: "stable"
+    linux: "stable"
+    windows: "stable"
+    macos: "stable"
