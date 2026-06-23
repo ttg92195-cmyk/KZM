@@ -43,17 +43,26 @@ jobs:
 
       - name: Verify Android project structure
         run: |
+          echo "=== Files in android/ ==="
+          ls -la android/
+          echo ""
+          echo "=== Files in android/app/ ==="
+          ls -la android/app/
+          echo ""
           echo "=== AndroidManifest.xml ==="
           cat android/app/src/main/AndroidManifest.xml
           echo ""
           echo "=== MainActivity.kt ==="
           cat android/app/src/main/kotlin/com/kzm/app/MainActivity.kt
           echo ""
-          echo "=== app/build.gradle.kts ==="
-          cat android/app/build.gradle.kts
+          echo "=== app/build.gradle ==="
+          cat android/app/build.gradle
           echo ""
-          echo "=== settings.gradle.kts ==="
-          cat android/settings.gradle.kts
+          echo "=== root build.gradle ==="
+          cat android/build.gradle
+          echo ""
+          echo "=== settings.gradle ==="
+          cat android/settings.gradle
           echo ""
           echo "=== pubspec.yaml ==="
           cat pubspec.yaml
