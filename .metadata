@@ -1,0 +1,12 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": "default",
+            "ios": "default",
+            "macos": "default",
+            "web": "default",
+            "linux": "default",
+            "windows": "default"
+        }
+    }
+}
